@@ -1,0 +1,27 @@
+@import "./variables.scss";
+@font-face {
+  font-family: "Montserat";
+  src: url("./fonts/Montserrat-Medium.ttf");
+}
+
+body {
+  background-color: $background-color;
+  color: $primary-color;
+  font-family: "Montserat", "Roboto", sans-serif;
+}
+
+a {
+  color: $primary-color;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: hidden;
+}
+
+main {
+  min-height: 95vh;
+  height: 100%;
+}

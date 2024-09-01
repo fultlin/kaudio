@@ -1,0 +1,56 @@
+header {
+  background-color: $third-color;
+  backdrop-filter: blur(15px);
+  color: $secondary-color;
+}
+
+.wrapper {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+
+  &__links {
+    color: $secondary-color;
+    font-family: 'Montserat';
+    font-size: 20px;
+  }
+
+  &__links:hover {
+    color: $secondary-color-hover;
+    border-bottom: 3px solid black;
+  }
+}
+
+.register__buttons {
+  max-width: max-content;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.button__header {
+  background-color: transparent;
+  border: none;
+  font-size: 14px;
+
+  &:hover {
+    border-bottom: 1px solid black;
+  }
+}
+
+span {
+  font-size: 20px;
+}
