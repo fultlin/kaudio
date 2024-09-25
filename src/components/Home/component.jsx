@@ -12,7 +12,8 @@ import UploadIcon from "./components/UploadIcon";
 const Home = observer(() => {
   const [allTracks, setAllTracks] = useState([]);
   const [src, setSrc] = useState("");
-  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
   const tracks = toJS(homeStore.music) || [];
 
   useEffect(() => {
@@ -25,30 +26,37 @@ const Home = observer(() => {
     }
   }, [tracks]);
 
-  useEffect(() => {
-    if (allTracks.length > 0) {
-      loadAndPlayTrack(currentTrackIndex);
-    }
-  }, [currentTrackIndex, allTracks]);
-
+  // Загрузка трека и автоматическое воспроизведение
   const loadAndPlayTrack = async (index) => {
     const track = allTracks[index];
     if (track) {
       const url = await homeStore.loadAndPlayMusic(track.name);
       setSrc(url);
+      setIsPlaying(true); // Автоматическое воспроизведение
     }
   };
 
+  const handleTrackClick = (index) => {
+    setCurrentTrackIndex(index);
+    loadAndPlayTrack(index); // Загружаем и автоматически воспроизводим трек
+  };
+
   const handlePrevTrack = () => {
-    setCurrentTrackIndex((prevIndex) => {
-      return prevIndex > 0 ? prevIndex - 1 : allTracks.length - 1;
-    });
+    const newIndex =
+      currentTrackIndex > 0 ? currentTrackIndex - 1 : allTracks.length - 1;
+    setCurrentTrackIndex(newIndex);
+    loadAndPlayTrack(newIndex);
   };
 
   const handleNextTrack = () => {
-    setCurrentTrackIndex((prevIndex) => {
-      return prevIndex < allTracks.length - 1 ? prevIndex + 1 : 0;
-    });
+    const newIndex =
+      currentTrackIndex < allTracks.length - 1 ? currentTrackIndex + 1 : 0;
+    setCurrentTrackIndex(newIndex);
+    loadAndPlayTrack(newIndex);
+  };
+
+  const handlePlayPause = () => {
+    setIsPlaying(!isPlaying); // Переключение между воспроизведением и паузой
   };
 
   return (
@@ -64,7 +72,7 @@ const Home = observer(() => {
           allTracks.map((track, index) => (
             <li
               key={track.id}
-              onClick={() => setCurrentTrackIndex(index)}
+              onClick={() => handleTrackClick(index)} // Клик на трек
               className={styles.track}
             >
               <div>{track.id}</div>
@@ -84,6 +92,8 @@ const Home = observer(() => {
       </ul>
       <MiniPlayer
         name={src}
+        isPlaying={isPlaying}
+        onPlayPause={handlePlayPause}
         onPrev={handlePrevTrack}
         onNext={handleNextTrack}
       />

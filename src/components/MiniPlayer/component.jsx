@@ -1,13 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./MiniPlayer.module.scss";
 
-export default function MiniPlayer({ name, onPrev, onNext }) {
-  const [isPlaying, setIsPlaying] = useState(false);
+export default function MiniPlayer({
+  name,
+  isPlaying,
+  onPlayPause,
+  onPrev,
+  onNext,
+}) {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(1);
   const playerRef = useRef(null);
 
+  // Загружаем трек и сбрасываем состояние
   useEffect(() => {
     if (name) {
       const audioElement = playerRef.current;
@@ -15,51 +21,64 @@ export default function MiniPlayer({ name, onPrev, onNext }) {
       audioElement.pause();
       audioElement.src = name;
       audioElement.load();
-      audioElement.play().catch((error) => {
-        console.error("Ошибка воспроизведения:", error);
-      });
-      setIsPlaying(true);
 
+      // Обновляем продолжительность трека после загрузки метаданных
       audioElement.onloadedmetadata = () => {
         setDuration(audioElement.duration);
-      };
-
-      audioElement.ontimeupdate = () => {
-        setCurrentTime(audioElement.currentTime);
       };
     }
   }, [name]);
 
-  const togglePlaying = () => {
+  // Управляем воспроизведением/паузой
+  useEffect(() => {
     const audioElement = playerRef.current;
-    if (isPlaying) {
-      audioElement.pause();
-      setIsPlaying(false);
-    } else {
+    if (isPlaying && name) {
       audioElement.play().catch((error) => {
         console.error("Ошибка воспроизведения:", error);
       });
-      setIsPlaying(true);
+    } else {
+      audioElement.pause();
     }
-  };
+  }, [isPlaying, name]);
 
+  // Обновляем текущее время трека
+  useEffect(() => {
+    const audioElement = playerRef.current;
+
+    const updateCurrentTime = () => {
+      setCurrentTime(audioElement.currentTime);
+    };
+
+    // Слушаем событие обновления времени
+    audioElement.addEventListener("timeupdate", updateCurrentTime);
+
+    return () => {
+      // Очищаем обработчик событий при размонтировании
+      audioElement.removeEventListener("timeupdate", updateCurrentTime);
+    };
+  }, []);
+
+  // Обработчик перемотки трека вручную
   const handleTimeChange = (event) => {
     const audioElement = playerRef.current;
     audioElement.currentTime = event.target.value;
     setCurrentTime(audioElement.currentTime);
   };
 
+  // Управляем изменением громкости
   const handleVolumeChange = (event) => {
     const audioElement = playerRef.current;
     audioElement.volume = event.target.value;
     setVolume(audioElement.volume);
   };
 
+  // Перемотка вперед
   const skipForward = () => {
     const audioElement = playerRef.current;
     audioElement.currentTime += 10;
   };
 
+  // Перемотка назад
   const skipBackward = () => {
     const audioElement = playerRef.current;
     audioElement.currentTime -= 10;
@@ -70,7 +89,7 @@ export default function MiniPlayer({ name, onPrev, onNext }) {
       <audio id="mini-player" ref={playerRef}></audio>
       <div className={styles.controlButtons}>
         <button onClick={onPrev}>Previous</button>
-        <button onClick={togglePlaying}>{isPlaying ? "Stop" : "Play"}</button>
+        <button onClick={onPlayPause}>{isPlaying ? "Pause" : "Play"}</button>
         <button onClick={onNext}>Next</button>
         <button onClick={skipBackward}>-10</button>
         <button onClick={skipForward}>+10</button>
