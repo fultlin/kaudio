@@ -7,6 +7,8 @@ export default function MiniPlayer({
   onPlayPause,
   onPrev,
   onNext,
+  trackName,
+  author,
 }) {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -87,34 +89,41 @@ export default function MiniPlayer({
   return (
     <div className={styles.player}>
       <audio id="mini-player" ref={playerRef}></audio>
-      <div className={styles.controlButtons}>
-        <button onClick={onPrev}>Previous</button>
-        <button onClick={onPlayPause}>{isPlaying ? "Pause" : "Play"}</button>
-        <button onClick={onNext}>Next</button>
-        <button onClick={skipBackward}>-10</button>
-        <button onClick={skipForward}>+10</button>
+      <div className={styles.trackinfo}>
+        <p>{trackName || '.....'}</p>
+        <p>{author || '.....'}</p>
       </div>
 
-      <div className={styles.timeControls}>
-        <span>
-          {Math.floor(currentTime / 60)}:
-          {Math.floor(currentTime % 60)
-            .toString()
-            .padStart(2, "0")}
-        </span>
-        <input
-          type="range"
-          min="0"
-          max={duration}
-          value={currentTime}
-          onChange={handleTimeChange}
-        />
-        <span>
-          {Math.floor(duration / 60)}:
-          {Math.floor(duration % 60)
-            .toString()
-            .padStart(2, "0")}
-        </span>
+      <div className={styles.controls}>
+        <div className={styles.controlButtons}>
+          <button onClick={onPrev}>Previous</button>
+          <button onClick={onPlayPause}>{isPlaying ? "Pause" : "Play"}</button>
+          <button onClick={onNext}>Next</button>
+          <button onClick={skipBackward}>-10</button>
+          <button onClick={skipForward}>+10</button>
+        </div>
+
+        <div className={styles.timeControls}>
+          <span>
+            {Math.floor(currentTime / 60)}:
+            {Math.floor(currentTime % 60)
+              .toString()
+              .padStart(2, "0")}
+          </span>
+          <input
+            type="range"
+            min="0"
+            max={duration}
+            value={currentTime}
+            onChange={handleTimeChange}
+          />
+          <span>
+            {Math.floor(duration / 60)}:
+            {Math.floor(duration % 60)
+              .toString()
+              .padStart(2, "0")}
+          </span>
+        </div>
       </div>
 
       <div className={styles.volumeControls}>

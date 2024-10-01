@@ -1,7 +1,7 @@
 header {
-  background-color: $third-color;
+  background-color: $background-color;
   backdrop-filter: blur(15px);
-  color: $secondary-color;
+  color: $text-color;
 }
 
 .wrapper {
@@ -23,13 +23,13 @@ nav {
   align-items: center;
 
   &__links {
-    color: $secondary-color;
+    color: $text-color;
     font-family: 'Montserat';
     font-size: 20px;
   }
 
   &__links:hover {
-    color: $secondary-color-hover;
+    color: $text-color;
     border-bottom: 3px solid black;
   }
 }
@@ -53,4 +53,8 @@ nav {
 
 span {
   font-size: 20px;
+}
+
+.button__header{
+  color: $text-color;
 }

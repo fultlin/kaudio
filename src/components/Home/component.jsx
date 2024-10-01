@@ -15,6 +15,8 @@ const Home = observer(() => {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const tracks = toJS(homeStore.music) || [];
+  const [trackName, setTrackName] = useState('')
+  const [author, setAuthor] = useState('')
 
   useEffect(() => {
     if (
@@ -31,6 +33,8 @@ const Home = observer(() => {
     const track = allTracks[index];
     if (track) {
       const url = await homeStore.loadAndPlayMusic(track.name);
+      setTrackName(track.name.slice(0, -4))
+      setAuthor(track.author)
       setSrc(url);
       setIsPlaying(true); // Автоматическое воспроизведение
     }
@@ -91,6 +95,8 @@ const Home = observer(() => {
         )}
       </ul>
       <MiniPlayer
+        trackName={trackName}
+        author={author}
         name={src}
         isPlaying={isPlaying}
         onPlayPause={handlePlayPause}

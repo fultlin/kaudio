@@ -6,12 +6,12 @@
 
 body {
   background-color: $background-color;
-  color: $primary-color;
+  color: $text-color;
   font-family: "Montserat", "Roboto", sans-serif;
 }
 
 a {
-  color: $primary-color;
+  color: $text-color;
 }
 
 body {
@@ -19,7 +19,14 @@ body {
   flex-direction: column;
   height: 100%;
   overflow-y: hidden;
+  overflow: hidden;
 }
+
+::-webkit-scrollbar {
+  width: 0;
+}
+
+
 
 main {
   min-height: 95vh;

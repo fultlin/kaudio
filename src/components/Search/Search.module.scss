@@ -1,5 +1,5 @@
 .send__button {
-    color: $primary-color;
+    color: $text-color;
     font-size: 20px;
     background-color: transparent;
     border: none;
@@ -24,12 +24,16 @@
     }
 
     &__input {
-        background-color: $primary-color;
+        background-color: $text-color;
         border-radius: 20px;
-        border-color: none;
         outline: none;
         padding: 5px;
         padding-left: 20px;
         max-width: 200px;
+        border: none;
+
+        &:focus {
+            outline: 3px solid rgb(43, 255, 0);
+        }
     }
 }
