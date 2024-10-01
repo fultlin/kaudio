@@ -1,6 +1,7 @@
 import { NavLink, Link } from "react-router-dom";
 import styles from "./Header.module.scss";
 import { observer } from "mobx-react-lite";
+import Search from "../../../Search/component";
 
 const Header = observer(({ auth, onLogout }) => {
   return (
@@ -10,13 +11,11 @@ const Header = observer(({ auth, onLogout }) => {
           <ul className={styles.nav}>
             <li>
               <NavLink to="/" className={styles.nav__links}>
-                Home
+                Kaudio
               </NavLink>
             </li>
             <li>
-              <NavLink to="/music" className={styles.nav__links}>
-                Music
-              </NavLink>
+              <Search/>
             </li>
           </ul>
 

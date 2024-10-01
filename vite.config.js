@@ -9,7 +9,8 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
       components: path.resolve(__dirname, "./src/components"),
       axiosurl: path.resolve(__dirname, './src/axios'),
-      stores: path.resolve(__dirname, './src/stores')
+      stores: path.resolve(__dirname, './src/stores'),
+      assets: path.resolve(__dirname, './src/assets')
     },
   },
   css: {

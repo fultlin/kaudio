@@ -24,7 +24,6 @@
     max-height: 460px;
     overflow-y: scroll;
   }
-  
 
   &__information__name {
     display: block;
@@ -37,3 +36,14 @@
   }
 }
 
+.aside {
+  border-right: 2px solid $audiocolor;
+  height: 100%;
+  float: left;
+  height: 100vh;
+  padding: 10px 10px 0 0;
+}
+
+.content {
+  margin: 0 auto;
+}

@@ -15,8 +15,8 @@ const Home = observer(() => {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const tracks = toJS(homeStore.music) || [];
-  const [trackName, setTrackName] = useState('')
-  const [author, setAuthor] = useState('')
+  const [trackName, setTrackName] = useState("");
+  const [author, setAuthor] = useState("");
 
   useEffect(() => {
     if (
@@ -33,8 +33,8 @@ const Home = observer(() => {
     const track = allTracks[index];
     if (track) {
       const url = await homeStore.loadAndPlayMusic(track.name);
-      setTrackName(track.name.slice(0, -4))
-      setAuthor(track.author)
+      setTrackName(track.name.slice(0, -4));
+      setAuthor(track.author);
       setSrc(url);
       setIsPlaying(true); // Автоматическое воспроизведение
     }
@@ -64,36 +64,39 @@ const Home = observer(() => {
   };
 
   return (
-    <div>
-      <div className={styles.upper__home}>
-        <Link to="upload">
-          <UploadIcon />
-        </Link>
-        <Search />
+    <>
+      <aside className={styles.aside}>цййцйц</aside>
+      <div className={styles.content}>
+        <div className={styles.upper__home}>
+          <Link to="upload">
+            <UploadIcon />
+          </Link>
+        </div>
+        <ul className={styles.track__list}>
+          {Array.isArray(allTracks) && allTracks.length > 0 ? (
+            allTracks.map((track, index) => (
+              <li
+                key={track.id}
+                onClick={() => handleTrackClick(index)} // Клик на трек
+                className={styles.track}
+              >
+                <div>{index + 1}</div>
+                <div>
+                  <span className={styles.track__information__name}>
+                    {track.name.slice(0, -4)}
+                  </span>
+                  <span className={styles.track__information__author}>
+                    {track.author}
+                  </span>
+                </div>
+              </li>
+            ))
+          ) : (
+            <div>No tracks available</div>
+          )}
+        </ul>
       </div>
-      <ul className={styles.track__list}>
-        {Array.isArray(allTracks) && allTracks.length > 0 ? (
-          allTracks.map((track, index) => (
-            <li
-              key={track.id}
-              onClick={() => handleTrackClick(index)} // Клик на трек
-              className={styles.track}
-            >
-              <div>{track.id}</div>
-              <div>
-                <span className={styles.track__information__name}>
-                  {track.name.slice(0, -4)}
-                </span>
-                <span className={styles.track__information__author}>
-                  {track.author}
-                </span>
-              </div>
-            </li>
-          ))
-        ) : (
-          <div>No tracks available</div>
-        )}
-      </ul>
+
       <MiniPlayer
         trackName={trackName}
         author={author}
@@ -103,7 +106,7 @@ const Home = observer(() => {
         onPrev={handlePrevTrack}
         onNext={handleNextTrack}
       />
-    </div>
+    </>
   );
 });
 

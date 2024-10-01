@@ -11,6 +11,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  border-top: 2px solid $audiocolor;
 }
 
 .controls {
@@ -28,10 +29,14 @@
 
 .volumeControls {
   width: 300px;
+  max-width: max-content;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .trackinfo {
-  width: 300px;
+  width: 200px;
 }
 
 .timeControls {
@@ -41,7 +46,7 @@
 }
 
 .timeControls input[type="range"] {
-  width: 800px;
+  width: 400px;
   margin: 0 10px;
 }
 
