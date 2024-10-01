@@ -38,12 +38,17 @@
 
 .aside {
   border-right: 2px solid $audiocolor;
-  height: 100%;
-  float: left;
   height: 100vh;
-  padding: 10px 10px 0 0;
+  padding: 30px ;
+  width: 270px;
 }
 
 .content {
-  margin: 0 auto;
+  margin-left: 20px;
+  flex: 1;
+}
+
+
+.wrap__home {
+  display: flex;
 }

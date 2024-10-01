@@ -64,7 +64,7 @@ const Home = observer(() => {
   };
 
   return (
-    <>
+    <div className={styles.wrap__home}>
       <aside className={styles.aside}>цййцйц</aside>
       <div className={styles.content}>
         <div className={styles.upper__home}>
@@ -106,7 +106,7 @@ const Home = observer(() => {
         onPrev={handlePrevTrack}
         onNext={handleNextTrack}
       />
-    </>
+    </div>
   );
 });
 
